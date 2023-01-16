@@ -1,0 +1,85 @@
+﻿@using Pharmacy.Repos.Dto
+
+@model UserReadDto
+
+@{
+    Layout = "~/Views/Shared/_FlatLayout.cshtml";
+}
+
+
+<div class="pcoded-content">
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+        <div class="page-block">
+            <div class="row align-items-center">
+                <div class="col-md-12">
+
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/users/index"><i class="feather icon-home"></i></a></li>
+                        <li class="breadcrumb-item"><a href="#!">Користувачі</a></li>
+                        <li class="breadcrumb-item"><a href="#!">Видалення</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Видалити користувача?</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-8">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                    <strong>@Html.DisplayNameFor(model => model.FirstName)  @Html.DisplayNameFor(model => model.LastName)</strong>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        @Html.DisplayFor(model => model.FirstName)   @Html.DisplayFor(model => model.LastName)
+                                    </div>
+                                    <div class="col-sm-4">
+                                    <strong>@Html.DisplayNameFor(model => model.Email)</strong>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        @Html.DisplayFor(model => model.Email)
+                                    </div>
+                                </div>
+
+
+                                <hr />
+                                <form asp-action="ConfirmDelete">
+                                    @Html.AntiForgeryToken()
+                                    <input asp-for="Id" type="hidden" />
+                                    <button type="submit" class="btn btn-danger">Видалити користувача!!!</button>
+                                <a href="/user/index" class="btn btn-outline-dark float-end">Повернутися до списку</a>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+@*
+<h1>Видалити користувача?</h1>
+<hr />
+
+<p>@Model.FirstName @Model.LastName</p>
+<p>@Model.Email</p>
+
+<hr />
+<form asp-action="ConfirmDelete" class="col-md-4">
+    @Html.AntiForgeryToken()
+    <input asp-for="Id" type="hidden" />
+    <button type="submit" class="btn btn-danger">Видалити користувача!!!</button>
+    <a href="/users/index" class="btn btn-outline-dark">Повернутися до списку / Відмінити</a>
+</form>
+*@

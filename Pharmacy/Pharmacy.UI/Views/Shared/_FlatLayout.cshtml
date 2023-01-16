@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Flat Able - Premium Admin Template by Phoenixcoded</title>
+    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 11]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="">
+    <meta name="author" content="Phoenixcoded" />
+    <!-- Favicon icon -->
+    <link rel="icon" href="~/assets/images/sss.ico" type="image/x-icon">
+
+    <!-- vendor css -->
+    <link rel="stylesheet" href="~/assets/css/style.css">
+
+
+</head>
+<body>
+    @await Html.PartialAsync("_FlatLayoutHeader")
+    @await Html.PartialAsync("_FlatLayoutNavigation")
+    
+    
+    <div class="pcoded-main-container">
+    @RenderBody()
+    </div>
+
+    <script src="~/assets/js/vendor-all.min.js"></script>
+    <script src="~/assets/js/plugins/bootstrap.min.js"></script>
+    <script src="~/assets/js/pcoded.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    
+</body>
+
+</html>
+@section Scripts {
+
+    <link href="~/lib/select2/css/select2.min.css" rel="stylesheet" />
+    <script src="~/lib/select2/js/select2.full.min.js"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(function () {
+            $(".fixed-button").stop;
+            $(".fixed-button.active").stop;
+        });
+    </script>
+ }
+<style>
+    .fixed-button {
+        opacity: -1 !important;
+            z-index: -10 !important;
+    }
+
+        .fixed-button.active {
+            opacity: -1 !important;
+                z-index: -10 !important;
+            overflow:hidden !important;
+        }
+</style>

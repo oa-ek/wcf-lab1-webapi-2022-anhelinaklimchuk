@@ -1,0 +1,153 @@
+﻿@using Pharmacy.Core
+@model CartView
+@{
+
+    Layout = "~/Views/Shared/_FlatLayout.cshtml";
+    var payment = ViewBag.Payement as string;
+    var Address = ViewBag.Address as string;
+    var typeofdelivery = ViewBag.TypeOfDelivery as string;
+    var phone = ViewBag.Phone as string;
+    var name = ViewBag.Name as string;
+}
+
+<div class="pcoded-content">
+    <!-- [ breadcrumb ] start -->
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Оформлення замовлення</h3>
+                    <h7>
+                        Введіть свої дані нижче, щоб завершити покупку.
+                    </h7>
+                </div>
+                <div class="card-body">
+                    <form asp-action="CreateOrder" >
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h3><strong>Адреса доставки</strong></h3>
+
+                                    <div class="form-group">
+                                        <label for="name" class="control-label">ПІБ</label>
+                                        <input type="text" class="form-control" id="name" name="name">
+                                    </div>
+
+                                    <div class="form-group">
+                                    <label for="phone" class="control-label">Номер Телефону</label>
+                                        <input type="text" class="form-control" id="phone" name="phone">
+                                    </div>
+
+                                    <div class="form-group">
+                                    <label for="Address" class="control-label">Адреса</label>
+                                        <input type="text" class="form-control" id="Address" name="Address">
+                                    </div>
+
+                                <br />
+                                <hr/>
+
+                                <h3><strong>Способи доставки</strong></h3>
+                                <div class="custom-control custom-radio text-start">
+                                    <input type="radio" id="typeofdelivery1" value="Нова пошта - Доставка до відділення" name="typeofdelivery" class="custom-control-input">
+                                    <label class="custom-control-label" style="justify-content:flex-start;" for="typeofdelivery1">Нова пошта - Доставка до відділення</label>
+                                </div>
+                                <p style="margin-left: 3em; font-weight:800">   50 грн</p>
+                                <hr />
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="typeofdelivery2" value="Нова пошта - Доставка за адресою" name="typeofdelivery" class="custom-control-input">
+                                    <label class="custom-control-label" style="justify-content:flex-start;" for="typeofdelivery2">Нова пошта - Доставка за адресою</label>
+                                </div>
+                                <p style="margin-left: 3em; font-weight:800">   80 грн</p>
+                                <hr />
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="typeofdelivery3" value="Укрпошта - Доставка до відділення" name="typeofdelivery" class="custom-control-input">
+                                    <label class="custom-control-label" style="justify-content:flex-start;" for="typeofdelivery3">Укрпошта - Доставка до відділення</label>
+                                </div>
+                                <p style="margin-left: 3em; font-weight:800">   50 грн</p>
+                                <hr />
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="typeofdelivery4" value="Укрпошта - Доставка за адресою" name="typeofdelivery" class="custom-control-input">
+                                    <label class="custom-control-label" style="justify-content:flex-start;" for="typeofdelivery4">Укрпошта - Доставка за адресою</label>
+                                </div>
+                                <p style="margin-left:3em; font-weight:800">   55 грн</p>
+                                <hr />
+                            </div>
+
+                            <div class="col-md-6">
+                                <h3><strong>Спосіб оплати</strong></h3>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="payment1" value="Переказ на рахунок" name="payment" class="custom-control-input">
+                                    <label class="custom-control-label" style="justify-content:flex-start; font-weight:800" for="payment1">Переказ на рахунок</label>
+                                    <p>[З вами зв'яжеться менеджер і надішле Вам реквізити зручним для Вас способом]</p>
+                                </div>
+                                <hr />
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="payment2" value="Оплата при отриманні" name="payment" class="custom-control-input">
+                                    <label class="custom-control-label" style="justify-content:flex-start; font-weight:800" for="payment2">Оплата при отриманні</label>
+                                    <p>[Просимо мати на увазі що в цьому випадку можливі додаткові комісії за зворотній переказ коштів]</p>
+                                </div>
+                                <hr />
+                                <br />
+                                <h3><strong>Всього</strong></h3>
+                                <div class="container">
+                                    <h5>@Model.shopCartItems.Count товар(ів/и) в кошику</h5>
+                                    <div class="row">
+                                        <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Товар</th>
+                                                    <th>К-сть</th>
+                                                    <th>Проміжний підсумок</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var u in Model.shopCartItems)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <img src="/medicaments/getimage/@u.ProductId" class="card-img-top" style="width:5rem;">
+
+                                                            <a asp-action="DetailsMedicament" asp-controller="Medicaments" asp-route-id="@u.ProductId" class="font-weight-bold">@u.ProductName</a>
+                                                        </td>
+                                                        <td>
+                                                            <a class="btn btn-primary btn-sm" asp-action="Add" asp-route-id="@u.ProductId">+</a>
+                                                            @u.Quantity
+                                                            <a class="btn btn-info btn-sm" asp-action="Decrease" asp-route-id="@u.ProductId">-</a>
+                                                        </td>
+                                                        <td>@Model.shopCartItems.Where(x=>x.ProductId==u.ProductId).Sum(x=>x.Quantity * x.Price).ToString("N2")</td>
+                                                        <td>
+                                                            <a class="btn btn-danger btn-sm" asp-action="Remove" asp-route-id="@u.ProductId">x</a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="4"><strong>Проміжний підсумок: @Model.GrandTotal.ToString("N2") грн</strong></td>
+                                                </tr>
+                                                <br />
+                                                <tr>
+                                                    <td colspan="4">
+                                                        <div class="form-group">
+                                                            <input type="submit" asp-action="CreateOrder" asp-controller="Order" value="Замовити" class="btn btn-primary" />
+                                                        </div>
+                                                        <!--<a class="btn btn-primary" asp-action="CreateOrder" asp-controller="Order">Замовити</a>-->
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+    </div>
+</div>
+    </div>
+</div>

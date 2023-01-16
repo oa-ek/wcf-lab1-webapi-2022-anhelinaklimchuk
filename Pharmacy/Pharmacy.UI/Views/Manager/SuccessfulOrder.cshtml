@@ -1,0 +1,141 @@
+﻿@using Pharmacy.Core
+@model Pharmacy.Core.OrderDetails
+@{
+    Layout = "~/Views/Shared/_FlatLayout.cshtml";
+
+    Order order = ViewBag.Order;
+    int count = 1;
+    List<OrderItems> items = ViewBag.Items;
+    float del = 0;
+    if (Model.TypeOfDelivery == "Нова пошта - Доставка до відділення")
+        del = 50;
+    if (Model.TypeOfDelivery == "Нова пошта - Доставка за адресою")
+        del = 80;
+    if (Model.TypeOfDelivery == "Укрпошта - Доставка до відділення")
+        del = 50;
+    if (Model.TypeOfDelivery == "Укрпошта - Доставка за адресою")
+        del = 55;
+}
+
+
+<div class="pcoded-content">
+
+    <div class="row">
+        <!-- [ sample-page ] start -->
+        <div class="col-sm-12">
+            <div class="card">
+
+                <div class="card-header">
+                    <h2>Замовлення № <span style="color:darkgray">@order.OrderId.ToString()</span> </h2>
+                    <div class="card-header-right">
+                        <div class="btn-group card-option">
+                            <button type="button" class="btn dropdown-toggle btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="feather icon-more-horizontal"></i>
+                            </button>
+                            <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
+                                <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span></a></li>
+                                <li class="dropdown-item minimize-card"><a href="#!"><span><i class="feather icon-minus"></i> collapse</span><span style="display:none"><i class="feather icon-plus"></i> expand</span></a></li>
+                                <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
+                                <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> remove</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="alert alert-success" role="alert">
+                            <strong>Ваше замовлення прийнято! З вами зв'яжеться менеджер</strong>
+                        </div>
+                        <div class="col-8">
+                            <div class="table-responsive">
+                                <h5 style="color:darkgrey">Товари</h5>
+                                <table class="table table-light caption-top">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Назва</th>
+                                            <th scope="col">К-сть</th>
+                                            <th scope="col">Ціна</th>
+                                            <th scope="col">Проміжний підсумок</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var u in items)
+                                        {
+
+                                            <tr>
+                                                <th scope="row">@count</th>
+                                                <td>@u.medicaments.Name</td>
+                                                <td>@u.Quantity</td>
+                                                <td>@u.Price</td>
+                                                <td>@u.Total грн</td>
+                                            </tr>
+                                            count++;
+                                        }
+                                    </tbody>
+                                    <tfoot>
+
+                                        <tr>
+                                            <td class="text-start" colspan="4"><strong>Доставка: </strong><p>@Model.TypeOfDelivery</p></td>
+                                            <td><p>+@del грн</p></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-end" colspan="5"><strong>Загальна сума: @Model.Total.Value.ToString("N2") грн</strong></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <br />
+                            </div>
+                            <br />
+
+                            <div class="container" style="height: 30em;">
+                                <div class="row align-items-top">
+                                    <div class="col-sm-6">
+                                        <div class="card text-white bg-secondary" style="height: 10em; margin-top: 2.5em;">
+                                            <div class="card-body text-white">
+                                                <h5 class="card-title text-white">Адресна книга</h5>
+                                                <p class="card-text" style="margin-bottom:3px">@Model.Address.Name</p>
+                                                <p class="card-text" style="margin-bottom:3px">@Model.Address.Phone</p>
+                                                <p class="card-text" style="margin-bottom:3px">@Model.Address.Address</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="card text-white bg-secondary" style="height: 10em; margin-top: 2.5em;">
+                                            <div class="card-body text-white">
+                                                <h5 class="card-title text-white">Спосіб доставки</h5>
+                                                <p class="card-text">@Model.Payment</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row align-items-center">
+                                    <div class="col-sm-6">
+                                        <div class="card text-white bg-secondary" style="height: 10em; margin-top: 2.5em;">
+                                            <div class="card-body text-white">
+                                                <h5 class="card-title text-white">Тип доставки</h5>
+                                                <p class="card-text">@Model.TypeOfDelivery</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="card text-white bg-secondary" style="height: 10em; margin-top: 2.5em;">
+                                            <div class="card-body text-white">
+                                                <h5 class="card-title text-white">Спосіб доставки</h5>
+                                                <p class="card-text">@Model.Payment</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+
+</div>
+
+

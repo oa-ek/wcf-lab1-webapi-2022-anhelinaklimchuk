@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Pharmacy.Core
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@model SmallCart
+@{
+    Layout = "~/Views/Shared/_FlatLayout.cshtml";
+}
+
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User)){
+
+        <li class="nav-item">
+            <form class="form-inline" asp-area="" asp-page="" asp-route-returnUrl="">
+                <button type="submit" class="nav-link btn btn-link text-dark">Cart</button>
+            </form>
+        </li>
+    }
+</ul>
+
+<!--@if(Model != null)
+{
+    <p>Items in cart:<span class="badge badge-primary">@Model.NumberOfItems</span></p>
+    <p>Total: <b>@Model.TotalAmount.ToString("C2")</b></p>
+    <a href="#" class="btn btn-danger">Clear Cart</a>
+
+}else
+{
+    <p class="lead m-0">Cart is Empty</p>
+}-->
+

@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Pharmacy.Core.SubCategory>
+
+@{
+    ViewData["Title"] = "SubCategories";
+    Layout = "~/Views/Shared/_FlatLayout.cshtml";
+}
+
+
+
+<div class="pcoded-content">
+    <div class="page-header">
+        <div class="page-block">
+            <div class="row align-items-center">
+                <div class="col-md-12">
+                    <div class="page-header-title">
+                        <h3 class="m-b-10">Список підкатергорій</h3>
+                    </div>
+                    <div class="float-end">
+                        <a href="/admin/createsubcategory" class="btn btn-outline-primary">Додати категорію</a>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+       
+    </div>
+    <div class="row">
+        <!-- [ basic-table ] start -->
+        <div class="col-md-12">
+            <div class="card">              
+                <div class="card-body table-border-style">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.SubCategoryId)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Name)
+                                    </th>
+                                    <th>Категорія</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.SubCategoryId)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Name)
+                                        </td>
+                                        <td>
+                                            @string.Join(", ", item.Category.Name)
+                                        </td>
+                                        <td>
+                                            <a asp-action="EditSubCategory" asp-route-id="@item.SubCategoryId" class="btn btn-warning">Редагувати</a> |
+                                            <a asp-action="DeleteSubCategory" asp-route-id="@item.SubCategoryId" class="btn btn-danger">Видалити</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+</div>
+

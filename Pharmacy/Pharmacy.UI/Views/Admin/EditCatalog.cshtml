@@ -1,0 +1,64 @@
+﻿@model Pharmacy.Core.Catalog
+
+@{
+    ViewData["Title"] = "EditCatalog";
+    Layout = "~/Views/Shared/_FlatLayout.cshtml";
+}
+
+
+<div class="pcoded-content">
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+        <div class="page-block">
+            <div class="row align-items-center">
+                <div class="col-md-12">
+
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
+                        <li class="breadcrumb-item"><a href="#!">Каталоги</a></li>
+                        <li class="breadcrumb-item"><a href="#!">Редагування</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Редагувати каталог</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <form asp-action="EditCatalog">
+
+                                @Html.AntiForgeryToken()
+                                <input asp-for="Id" type="hidden" />
+
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                <div class="form-group">
+                                    <label asp-for="Name" class="control-label"></label>
+                                    <input asp-for="Name" class="form-control" />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                                <div class="form-group" style="margin-top:1em">
+                                    <input type="submit" value="Зберегти" class="btn btn-primary" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="float-end">
+        <a href="/admin/catalogs" class="btn btn-outline-dark">Повернутися до списку</a>
+    </div>
+</div>

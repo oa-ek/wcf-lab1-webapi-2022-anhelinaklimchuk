@@ -1,0 +1,127 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Pharmacy.Core
+@using Pharmacy.Repos
+@using Pharmacy.Repos
+@*@using Pharmacy.UI.Areas.Identity.Pages.Account*@
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@*@inject ILogger<LogoutModel> _logger;*@
+
+
+<nav class="pcoded-navbar  ">
+    <div class="navbar-wrapper  ">
+        <div class="navbar-content scroll-div ">
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                User user = await UserManager.GetUserAsync(User);
+
+
+                if (user != null)
+                {
+                    if (user != null && await UserManager.IsInRoleAsync(user, "Admin"))
+                    {
+                        <div class="main-menu-header">
+                            <img class="img-radius" src="~/assets/images/user/avatar-2.jpg" alt="User-Profile-Image">
+                            <div class="user-details">
+                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"></a>
+                                <span>@User.Identity?.Name!</span>
+                                <div id="more-details">Admin<i class="fa fa-chevron-down m-l-5"></i></div>
+                            </div>
+                        </div>
+                    }
+                    else if (user != null && await UserManager.IsInRoleAsync(user, "Manager"))
+                    {
+                                    <div class="main-menu-header">
+                        <img class="img-radius" src="~/assets/images/user/avatar-2.jpg" alt="User-Profile-Image">
+                        <div class="user-details">
+                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"></a>
+                            <span>@User.Identity?.Name!</span>
+                            <div id="more-details">Manager<i class="fa fa-chevron-down m-l-5"></i></div>
+                        </div>
+                        </div>
+                    }
+                    else if (user != null && await UserManager.IsInRoleAsync(user, "User"))
+                    {
+                        <div class="main-menu-header">
+                            <img class="img-radius" src="~/assets/images/user/avatar-2.jpg" alt="User-Profile-Image">
+                            <div class="user-details">
+                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"></a>
+                                <span>@User.Identity?.Name!</span>
+                                <div id="more-details">User<i class="fa fa-chevron-down m-l-5"></i></div>
+                            </div>
+                        </div>
+                    }
+
+                }
+
+
+                <div class="collapse" id="nav-user-link">
+                    <ul class="list-unstyled">
+                        <li class="list-group-item"><a href="~/user-profile.html"><i class="feather icon-user m-r-5"></i>View Profile</a></li>
+                        <li class="list-group-item"><a href="#!"><i class="feather icon-settings m-r-5"></i>Settings</a></li>
+                        <li class="list-group-item">
+
+                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post">
+                                <button type="submit" class="btn btn-outline-light"><i class="feather icon-log-out m-r-5"></i>Logout</button>
+                            </form>
+                            @*<form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                <button class="btn btn-outline-light" type="submit"><i class="feather icon-log-out m-r-5"></i>Logout</button>
+                        </form>*@
+                        </li>
+
+
+                    </ul>
+                </div>
+                
+
+            }
+            <ul class="nav pcoded-inner-navbar ">
+            @if (!SignInManager.IsSignedIn(User))
+            {
+
+
+                    <li class="nav-item pcoded-hasmenu">
+                        <a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-lock"></i></span><span class="pcoded-mtext">Authentication</span></a>
+                    <ul class="pcoded-submenu">
+                            <li><a asp-area="Identity" asp-page="/Account/Register"><span class="pcoded-micon"><i class="feather icon-log-in"></i></span>Sign up</a></li>
+                            <li><a asp-area="Identity" asp-page="/Account/Login"><span class="pcoded-micon"><i class="feather icon-log-out"></i></span>Sign in</a></li>
+                    </ul>
+                </li>}
+
+                <li class="nav-item pcoded-menu-caption">
+                    <label>Navigation</label>
+                </li>
+                <li class="nav-item pcoded-hasmenu">
+                    <a  class="nav-link " asp-action="Index" asp-controller="Home"><span class="pcoded-micon"><i class="feather icon-menu"></i></span><span class="pcoded-mtext">Каталог</span></a>
+                    <ul class="pcoded-submenu">
+                        <li><a href="/Category/Index/1">Медикаменти</a></li>
+                        <li><a href="/Category/Index/2">Краса та вигляд</a></li>
+                    </ul>
+                </li>
+                @if (User.IsInRole("Admin"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Users" asp-action="Index"><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">Користувачі</span></a>
+                    </li>
+                }
+                @if (User.IsInRole("Admin"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Index"><span class="pcoded-micon"><i class="feather icon-plus-square"></i></span><span class="pcoded-mtext">Додати</span></a>
+                    </li>
+                }
+
+                @if (User.IsInRole("Manager"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Manager" asp-action="Index"><span class="pcoded-micon"><i class="feather icon-clipboard"></i></span><span class="pcoded-mtext">Замовлення</span></a>
+                    </li>
+                }
+
+
+            </ul>
+
+        </div>
+    </div>
+</nav>
