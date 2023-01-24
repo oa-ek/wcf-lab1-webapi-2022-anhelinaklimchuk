@@ -1,0 +1,46 @@
+﻿@page "/Medicaments/index"
+@inject HttpClient Http
+@using PharmacyApp.Shared.Dto;
+<div class="">
+    <a class="btn btn-sm btn-outline-danger" href="/medicaments/new">Додати медикаменти</a>
+</div>
+<br />
+<h3>Медикаменти</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in medicaments)
+        {
+            <tr>
+                <td><img class="rounded" src="@item.Image" alt="@item.Image" style="max-height:100px;"></td>
+                <td>@item.Name</td>
+                <td>
+
+                    <a class="btn btn-sm btn-outline-secondary" href="/medicaments/edit/@item.MedicamentsId">
+                        <i class="oi oi-pencil"></i>
+                    </a>
+                    <a class="btn btn-sm btn-outline-danger" href="/medicaments/delete/@item.MedicamentsId">
+                        <i class="oi oi-delete"></i>
+                    </a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    List<MedicamentsDto> medicaments = new List<MedicamentsDto>();
+    protected override async Task OnInitializedAsync()
+    {
+        medicaments = await Http.GetFromJsonAsync<List<MedicamentsDto>>("api/Medicaments/");
+    }
+}
